@@ -1,20 +1,22 @@
 package org.northernjay.sfgpetclinic.services.map;
 
-import org.northernjay.sfgpetclinic.model.Specialty;
+import org.northernjay.sfgpetclinic.model.Speciality;
 import org.northernjay.sfgpetclinic.model.Vet;
-import org.northernjay.sfgpetclinic.services.SpecialtyService;
+import org.northernjay.sfgpetclinic.services.SpecialityService;
 import org.northernjay.sfgpetclinic.services.VetService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Profile({"default", "map"})
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
 
-    private final SpecialtyService specialtyService;
+    private final SpecialityService specialityService;
 
-    public VetServiceMap(SpecialtyService specialtyService) {
-        this.specialtyService = specialtyService;
+    public VetServiceMap(SpecialityService specialityService) {
+        this.specialityService = specialityService;
     }
 
     @Override
@@ -30,11 +32,11 @@ public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetS
     @Override
     public Vet save(Vet object) {
 
-        if(object.getSpecialties().size() > 0) {
-            object.getSpecialties().forEach(specialty -> {
+        if(object.getSpecialities().size() > 0) {
+            object.getSpecialities().forEach(specialty -> {
                 if (specialty.getId() == null) {
-                    Specialty savedSpecialty = specialtyService.save(specialty);
-                    specialty.setId(savedSpecialty.getId());
+                    Speciality savedSpeciality = specialityService.save(specialty);
+                    specialty.setId(savedSpeciality.getId());
                 }
             });
         }

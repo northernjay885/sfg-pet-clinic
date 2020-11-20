@@ -1,8 +1,8 @@
 package org.northernjay.sfgpetclinic.services.map.springdatajpa;
 
-import org.northernjay.sfgpetclinic.model.Specialty;
+import org.northernjay.sfgpetclinic.model.Speciality;
 import org.northernjay.sfgpetclinic.repositories.SpecialtyRepository;
-import org.northernjay.sfgpetclinic.services.SpecialtyService;
+import org.northernjay.sfgpetclinic.services.SpecialityService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -12,34 +12,34 @@ import java.util.Set;
 
 @Service
 @Profile("springdatajpa")
-public class SpecialtySDJpaService implements SpecialtyService {
+public class SpecialitySDJpaService implements SpecialityService {
 
     private final SpecialtyRepository specialtyRepository;
 
-    public SpecialtySDJpaService(SpecialtyRepository specialtyRepository) {
+    public SpecialitySDJpaService(SpecialtyRepository specialtyRepository) {
         this.specialtyRepository = specialtyRepository;
     }
 
     @Override
-    public Set<Specialty> findAll() {
+    public Set<Speciality> findAll() {
 
-        Set<Specialty> specialties = new HashSet<>();
+        Set<Speciality> specialties = new HashSet<>();
         specialtyRepository.findAll().forEach(specialties::add);
         return specialties;
     }
 
     @Override
-    public Specialty findById(Long aLong) {
+    public Speciality findById(Long aLong) {
         return specialtyRepository.findById(aLong).orElse(null);
     }
 
     @Override
-    public Specialty save(Specialty object) {
+    public Speciality save(Speciality object) {
         return specialtyRepository.save(object);
     }
 
     @Override
-    public void delete(Specialty object) {
+    public void delete(Speciality object) {
         specialtyRepository.delete(object);
     }
 
