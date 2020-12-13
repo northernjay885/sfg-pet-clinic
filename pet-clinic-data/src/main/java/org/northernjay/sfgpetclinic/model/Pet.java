@@ -9,10 +9,19 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true, exclude = "visits")
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "pets")
 public class Pet extends BaseEntity {
+
+    @Builder
+    public Pet(Long id, String name) {
+        super(id);
+        this.name = name;
+    }
 
     @Column(name = "name")
     private String name;
