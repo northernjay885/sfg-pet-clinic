@@ -13,9 +13,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.beans.PropertyEditorSupport;
+import java.time.LocalDate;
 
 @Controller
-@RequestMapping("owners/{ownerId}")
+@RequestMapping("owners/{ownerId}/pets/{petId}")
 public class VisitController {
 
     private static final String VIEWS_VISITS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdateVisitForm";
@@ -33,12 +35,19 @@ public class VisitController {
         return petService.findById(petId);
     }
 
-    @InitBinder("pet")
+    @InitBinder
     public void initPetBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
+
+        dataBinder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                setValue(LocalDate.parse(text));
+            }
+        });
     }
 
-    @GetMapping("/pets/{petId}/visits/new")
+    @GetMapping("/visits/new")
     public String initCreationForm(Pet pet, Model model) {
         Visit visit = new Visit();
         visit.setPet(pet);
@@ -47,7 +56,7 @@ public class VisitController {
         return VIEWS_VISITS_CREATE_OR_UPDATE_FORM;
     }
 
-    @PostMapping("/pets/{petId}/visits/new")
+    @PostMapping("/visits/new")
     public String processVisitForm(@Valid Visit visit, BindingResult result, Pet pet) {
         if (result.hasErrors()) {
             return VIEWS_VISITS_CREATE_OR_UPDATE_FORM;
