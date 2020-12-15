@@ -49,12 +49,12 @@ public class PetController {
     public void initPetBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
 
-        dataBinder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) throws IllegalArgumentException {
-                setValue(LocalDate.parse(text));
-            }
-        });
+//        dataBinder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
+//            @Override
+//            public void setAsText(String text) throws IllegalArgumentException {
+//                setValue(LocalDate.parse(text));
+//            }
+//        });
     }
 
     @GetMapping("/pets/new")
